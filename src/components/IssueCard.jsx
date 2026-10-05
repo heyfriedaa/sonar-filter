@@ -1,10 +1,17 @@
-import { ChevronDown, CircleAlert, Clock, MessageSquare, Shield } from 'lucide-react';
+import { ChevronDown, Clock, MessageSquare, Shield } from 'lucide-react';
+import { SeverityIcon } from './SeverityIcon';
 
-export function IssueCard({ issue }) {
+export function IssueCard({ issue, checked, onToggle }) {
   return (
-    <div className="issue-card">
+    <div className={`issue-card ${checked ? 'selected' : ''}`}>
       <div className="issue-row issue-row-top">
-        <input type="checkbox" className="issue-checkbox" aria-label={`Select issue ${issue.id}`} />
+        <input
+          type="checkbox"
+          className="issue-checkbox"
+          aria-label={`Select issue ${issue.id}`}
+          checked={checked ?? false}
+          onChange={(e) => onToggle?.(e.target.checked)}
+        />
         <div className="issue-meta">
           <span className="issue-file">&lt;&gt; {issue.file}</span>
         </div>
@@ -17,10 +24,13 @@ export function IssueCard({ issue }) {
         <span className={`severity-pill severity-pill-${issue.severity.toLowerCase()}`}>
           {issue.security && <span className="severity-category">Security</span>}
           <span className="severity-value">
-            <CircleAlert size={12} fill="currentColor" />
+            <SeverityIcon severity={issue.severity} size={13} />
             {issue.severity}
           </span>
         </span>
+        {issue.tags.length > 0 && (
+          <span className="issue-tags">{issue.tags.join(', ')} +</span>
+        )}
       </div>
 
       <div className="issue-row issue-row-actions">
@@ -50,8 +60,8 @@ export function IssueCard({ issue }) {
             <Shield size={14} />
             {issue.type}
           </span>
-          <span className={`issue-severity severity-${issue.severity.toLowerCase()}`}>
-            <CircleAlert size={12} fill="currentColor" />
+          <span className="issue-severity">
+            <SeverityIcon severity={issue.severity} size={13} />
             {issue.severity}
           </span>
         </div>
