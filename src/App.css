@@ -16,8 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px;
-  padding: 0 16px;
+  padding: 4px 16px;
   background: var(--sc-surface);
   border-bottom: 1px solid var(--sc-border);
   position: sticky;
@@ -94,7 +93,7 @@
   font-weight: 600;
 
   &:hover {
-    background: rgba(138, 110, 255, 0.12);
+    background: rgba(157, 169, 243, 0.12);
   }
 }
 

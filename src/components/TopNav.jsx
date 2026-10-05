@@ -7,7 +7,7 @@ export function TopNav() {
       <div className="top-nav-left">
         <div className="top-nav-brand">
           <div className="logo-placeholder">
-            <img className="logo-mark" src={logoUrl} height="30" alt="SonarQube Cloud" />
+            <img className="logo-mark" src={logoUrl} height="48" alt="SonarQube Cloud" />
           </div>
         </div>
         <nav className="top-nav-links">
