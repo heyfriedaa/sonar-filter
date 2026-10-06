@@ -272,20 +272,26 @@ function App() {
               {view === 'top10' ? 'Top 10 issues' : 'All issues'}
             </h2>
             <div className="section-subtitle-row">
-              <p className="section-subtitle">
+              <label className="section-subtitle">
+                <input
+                  type="checkbox"
+                  className="issue-checkbox"
+                  checked={
+                    filtered.length > 0 &&
+                    filtered.every((i) => selected.has(i.id))
+                  }
+                  onChange={(e) =>
+                    setSelected(
+                      e.target.checked
+                        ? new Set(filtered.map((i) => i.id))
+                        : new Set()
+                    )
+                  }
+                />
                 {view === 'top10'
                   ? 'Showing the highest severity issues in this project.'
                   : 'Showing all open issues in this project.'}
-              </p>
-              <button
-                className="bulk-toggle"
-                onClick={() =>
-                  setSelected(new Set(filtered.map((i) => i.id)))
-                }
-              >
-                Bulk
-                <ChevronDown size={14} />
-              </button>
+              </label>
             </div>
 
             <div className="issue-list">

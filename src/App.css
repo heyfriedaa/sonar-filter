@@ -660,31 +660,16 @@
 .section-subtitle-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 12px;
 }
 
 .section-subtitle {
-  font-size: 13px;
-  color: var(--sc-text-secondary);
-}
-
-.bulk-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
-  background: transparent;
-  border: 1px solid var(--sc-border);
-  border-radius: 6px;
-  color: var(--sc-text-primary);
+  gap: 8px;
   font-size: 13px;
-  font-weight: 600;
-
-  &:hover {
-    border-color: var(--sc-text-tertiary);
-    background: var(--sc-surface);
-  }
+  color: var(--sc-text-secondary);
+  cursor: pointer;
 }
 
 /* ---------- Bulk action bar ---------- */
