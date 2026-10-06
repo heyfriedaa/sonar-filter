@@ -1,13 +1,15 @@
 .app-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .app-body {
   display: flex;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
 }
 
 /* ---------- Top nav ---------- */
@@ -144,6 +146,8 @@
 .sidebar {
   width: 240px;
   flex-shrink: 0;
+  align-self: flex-start;
+  height: 100%;
   background: var(--sc-sidebar);
   border-right: 1px solid var(--sc-border);
   padding: 12px 8px;
@@ -750,6 +754,9 @@
 /* ---------- Issue list ---------- */
 
 .issue-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   background: var(--sc-surface);
   border: 1px solid var(--sc-border);
   border-radius: 8px;
@@ -776,6 +783,17 @@
 
 .issue-checkbox {
   accent-color: var(--sc-link);
+}
+
+.issue-checkbox-col {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+.issue-card-body {
+  flex: 1;
+  min-width: 0;
 }
 
 .issue-meta {
@@ -836,7 +854,7 @@
   display: inline-flex;
   align-items: center;
   padding: 2px 8px;
-  background: var(--sc-severity-category-bg);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--sc-text-primary);
 }
 
@@ -848,29 +866,29 @@
   color: var(--sc-text-primary);
 }
 
-.severity-pill-blocker {
-  border-color: var(--sc-severity-blocker-border);
-
-  .severity-value {
-    background: var(--sc-severity-blocker-bg);
-    color: #fff;
-  }
+.severity-pill-blocker .severity-value {
+  background: #a04b4b;
+  color: #f8e9dd;
 }
 
 .severity-pill-high .severity-value {
-  background: rgba(245, 158, 11, 0.2);
-  color: var(--sc-warning);
+  background: #b06a42;
+  color: #f8e9dd;
 }
 
 .severity-pill-medium .severity-value {
-  background: rgba(108, 153, 244, 0.15);
-  color: var(--sc-link);
+  background: #97654a;
+  color: #f8e9dd;
 }
 
-.severity-pill-low .severity-value,
+.severity-pill-low .severity-value {
+  background: #8a7c4d;
+  color: #f8e9dd;
+}
+
 .severity-pill-info .severity-value {
-  background: var(--sc-surface-raised);
-  color: var(--sc-text-secondary);
+  background: #5e7d9c;
+  color: #f8e9dd;
 }
 
 .issue-severity {
@@ -879,6 +897,102 @@
 
 .issue-row-actions {
   justify-content: space-between;
+  border-top: 1px solid var(--sc-border);
+  padding-top: 10px;
+}
+
+.issue-actions-dropdown {
+  position: relative;
+}
+
+.card-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 25;
+  min-width: 300px;
+  padding: 6px;
+  background: var(--sc-surface);
+  border: 1px solid var(--sc-border);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.card-menu-title {
+  padding: 10px 12px;
+  margin: -6px -6px 6px;
+  font-size: 14px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--sc-border);
+}
+
+.card-menu-option {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  text-align: left;
+  color: var(--sc-text-primary);
+  font-size: 13px;
+
+  &:hover {
+    background: var(--sc-surface-raised);
+  }
+
+  &.single {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.card-menu-option-label {
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.card-menu-option-desc {
+  display: block;
+  font-size: 12px;
+  color: var(--sc-text-secondary);
+}
+
+.card-menu-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 2px 2px 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--sc-accent);
+  border-radius: 6px;
+  color: var(--sc-text-tertiary);
+
+  input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--sc-text-primary);
+    font-size: 13px;
+  }
+}
+
+.avatar-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--sc-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
 .issue-left-actions {
@@ -890,6 +1004,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  height: 26px;
   padding: 4px 10px;
   background: var(--sc-surface-raised);
   border: 1px solid var(--sc-border-subtle);

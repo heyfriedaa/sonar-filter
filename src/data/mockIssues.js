@@ -48,7 +48,7 @@ severities.forEach((severity, s) => {
       severity,
       quality: pick(qualities, i + s),
       status: pick(statuses, i),
-      assignee: i % 5 === 0 ? 'Me' : 'Not assigned',
+      assignee: i % 5 === 0 ? 'Maya Chen' : 'Not assigned',
       line: `L${(i * 37) % 400 + 7}`,
       comments: i % 4 === 0 ? (i % 3) + 1 : 0,
       effort: pick(efforts, i),

@@ -3,6 +3,7 @@ import { Bot, Check, ChevronDown, ChevronRight, CircleAlert, Flame, GitBranch, G
 import { TopNav } from './components/TopNav'
 import { Sidebar } from './components/Sidebar'
 import { IssueCard } from './components/IssueCard'
+import { SeverityIcon } from './components/SeverityIcon'
 import { issues } from './data/mockIssues'
 import './App.css'
 
@@ -14,6 +15,7 @@ const branches = [
 const sortOptions = ['Priority', 'Filename', 'Creation date']
 
 const severityRank = { Blocker: 0, High: 1, Medium: 2, Low: 3, Info: 4 }
+const qualityRank = { Security: 0, Reliability: 1, Maintainability: 2 }
 
 const filterCategories = [
   { key: 'quality', label: 'Software quality', field: 'quality', options: ['Security', 'Reliability', 'Maintainability'] },
@@ -84,11 +86,12 @@ function App() {
     const sorted = [...base].sort((a, b) => {
       if (sortBy === 'Filename') return a.file.localeCompare(b.file)
       if (sortBy === 'Creation date') return b.createdRank - a.createdRank
-      return severityRank[a.severity] - severityRank[b.severity]
+      return (
+        qualityRank[a.quality] - qualityRank[b.quality] ||
+        severityRank[a.severity] - severityRank[b.severity]
+      )
     })
-    return view === 'top10'
-      ? sorted.filter((i) => i.severity === 'Blocker').slice(0, 10)
-      : sorted
+    return view === 'top10' ? sorted.slice(0, 10) : sorted
   }, [view, sortBy, appliedFilters])
 
   const openFilters = () => {
@@ -173,6 +176,7 @@ function App() {
               </button>
             </div>
 
+            {view === 'all' && (
             <div className="toolbar-right">
               <span className="sort-label">Sort by</span>
               <div className="filter-dropdown">
@@ -213,6 +217,7 @@ function App() {
                 <ChevronDown size={14} />
               </button>
             </div>
+            )}
           </div>
 
           {openMenu === 'filters' && (
@@ -244,6 +249,9 @@ function App() {
                         checked={checked}
                         onChange={() => togglePending(category.key, option)}
                       />
+                      {option in severityRank && (
+                        <SeverityIcon severity={option} size={14} />
+                      )}
                       <span className="filters-option-label">{option}</span>
                       <span className="filters-option-count">{count}</span>
                     </label>
@@ -289,7 +297,7 @@ function App() {
                   }
                 />
                 {view === 'top10'
-                  ? 'Showing the highest severity issues in this project.'
+                  ? 'Showing top 10 issues with Security and High severity first.'
                   : 'Showing all open issues in this project.'}
               </label>
             </div>
