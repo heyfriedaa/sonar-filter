@@ -1,5 +1,6 @@
 :root {
   /* SonarCloud dark palette approximated from screenshots */
+  color-scheme: dark;
   --sc-bg: #1b212f;
   --sc-surface: #292e41;
   --sc-surface-raised: #343b52;
@@ -24,6 +25,17 @@
   --sc-success: #4ade80;
   --sc-tag-bg: #2c3e5a;
   --sc-tag-text: #8fb8ff;
+  --sc-severity-blocker: #a04b4b;
+  --sc-severity-high: #b06a42;
+  --sc-severity-medium: #97654a;
+  --sc-severity-low: #8a7c4d;
+  --sc-severity-info: #5e7d9c;
+  --sc-severity-text: #f8e9dd;
+  --sc-issue-heading-size: 15px;
+  --sc-font-body: 14px;
+  --sc-font-meta: 13px;
+  --sc-font-small: 12px;
+  --sc-checkbox-tick: #1b212f;
 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
@@ -36,8 +48,103 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root[data-theme='light'] {
+  color-scheme: light;
+  --sc-bg: #fcfcfd;
+  --sc-surface: #ffffff;
+  --sc-surface-raised: #f1f2f9;
+  --sc-sidebar: #ffffff;
+  --sc-sidebar-active: #f0f1f9;
+  --sc-border: #cdd4ed;
+  --sc-border-subtle: #e4e7f4;
+  --sc-severity-category-bg: #f4e7ec;
+  --sc-severity-blocker-bg: #852a33;
+  --sc-severity-blocker-border: #a2262e;
+  --sc-text-primary: #42465f;
+  --sc-text-headline: #252839;
+  --sc-text-secondary: #5f709c;
+  --sc-text-tertiary: #65749d;
+  --sc-text-accent: #596dd7;
+  --sc-link: #596dd7;
+  --sc-accent: #596dd7;
+  --sc-upgrade-bg: #5e47d6;
+  --sc-danger: #b82c38;
+  --sc-danger-bg: #fce8eb;
+  --sc-warning: #a86100;
+  --sc-success: #25763b;
+  --sc-tag-bg: #edf7fc;
+  --sc-tag-text: #316c91;
+  --sc-tab-selected-bg: #ffffff;
+  --sc-tab-border: #c2cde1;
+  --sc-tab-idle-bg: #f0f2fa;
+  --sc-disabled-text: #a4adc4;
+  --sc-count-idle-bg: #e0e6f4;
+  --sc-checkbox-tick: #ffffff;
+}
+
 * {
   box-sizing: border-box;
+}
+
+input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-grid;
+  place-content: center;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  border: 1px solid var(--sc-text-tertiary);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--sc-accent);
+  vertical-align: middle;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    width: 7px;
+    height: 4px;
+    border-left: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-1px) rotate(-45deg) scale(0);
+  }
+
+  &:checked {
+    background: var(--sc-accent);
+    border-color: var(--sc-accent);
+    color: var(--sc-checkbox-tick);
+  }
+
+  &:checked::before {
+    transform: translateY(-1px) rotate(-45deg) scale(1);
+  }
+
+  &:indeterminate::before {
+    height: 0;
+    border-left: none;
+    transform: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sc-link);
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+@media (forced-colors: active) {
+  input[type='checkbox'] {
+    appearance: auto;
+    -webkit-appearance: auto;
+
+    &::before { content: none; }
+  }
 }
 
 body {

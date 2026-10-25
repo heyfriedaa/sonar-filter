@@ -1,13 +1,14 @@
 import { Bell, ChevronDown, Gem, HelpCircle, Plus, Search } from 'lucide-react';
 import logoUrl from '../assets/SQ_Logo.svg';
+import lightLogoUrl from '../assets/sonarqubecloud-blue.svg';
 
-export function TopNav() {
+export function TopNav({ theme = 'dark' }) {
   return (
     <header className="top-nav">
       <div className="top-nav-left">
         <div className="top-nav-brand">
           <div className="logo-placeholder">
-            <img className="logo-mark" src={logoUrl} height="48" alt="SonarQube Cloud" />
+            <img className="logo-mark" src={theme === 'light' ? lightLogoUrl : logoUrl} height="48" alt="SonarQube Cloud" />
           </div>
         </div>
         <nav className="top-nav-links">

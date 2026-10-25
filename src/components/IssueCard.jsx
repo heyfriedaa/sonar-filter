@@ -14,7 +14,7 @@ const statusOptions = [
   },
 ];
 
-export function IssueCard({ issue, checked, onToggle }) {
+export function IssueCard({ issue, checked, onToggle, fileOutside = false, onOpen, active = false }) {
   const [openMenu, setOpenMenu] = useState(null);
 
   useEffect(() => {
@@ -29,7 +29,9 @@ export function IssueCard({ issue, checked, onToggle }) {
   const assigned = issue.assignee !== 'Not assigned';
 
   return (
-    <div className={`issue-card ${checked ? 'selected' : ''}`}>
+    <div className="issue-entry" data-issue-id={issue.id}>
+    {fileOutside && <div className="issue-file facet-issue-file">{issue.file}</div>}
+    <div className={`issue-card ${checked ? 'selected' : ''} ${active ? 'detail-active' : ''} ${onOpen ? 'can-open' : ''}`} onClick={onOpen ? (event) => { if (!event.target.closest('button, input, label, a')) onOpen() } : undefined}>
       <input
         type="checkbox"
         className="issue-checkbox issue-checkbox-col"
@@ -40,12 +42,12 @@ export function IssueCard({ issue, checked, onToggle }) {
       <div className="issue-card-body">
       <div className="issue-row issue-row-top">
         <div className="issue-meta">
-          <span className="issue-file">&lt;&gt; {issue.file}</span>
+          {!fileOutside && <span className="issue-file">&lt;&gt; {issue.file}</span>}
         </div>
         <span className="responsibility-tag">{issue.responsibility}</span>
       </div>
 
-      <h3 className="issue-title">{issue.title}</h3>
+      <h3 className="issue-title">{onOpen ? <button className="issue-open-button" aria-expanded={active} onClick={onOpen}>{issue.title}</button> : issue.title}</h3>
 
       <div className="issue-row issue-row-badges">
         <span className={`severity-pill severity-pill-${issue.severity.toLowerCase()}`}>
@@ -137,6 +139,7 @@ export function IssueCard({ issue, checked, onToggle }) {
         </div>
       </div>
       </div>
+    </div>
     </div>
   );
 }
