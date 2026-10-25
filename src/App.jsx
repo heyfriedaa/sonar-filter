@@ -30,6 +30,13 @@ const versionGroups = [
   { id: 'moonshot', label: 'Moonshot', versions: [{ id: 'moonshot-v1', label: 'V1' }] },
 ]
 
+const versionIds = new Set(versionGroups.flatMap((group) => group.versions.map((version) => version.id)))
+
+const versionFromUrl = () => {
+  const id = new URLSearchParams(window.location.search).get('v')
+  return versionIds.has(id) ? id : 'facet-v1'
+}
+
 const severityRank = { Blocker: 0, High: 1, Medium: 2, Low: 3, Info: 4 }
 const qualityRank = { Security: 0, Reliability: 1, Maintainability: 2 }
 
@@ -83,7 +90,13 @@ function App() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
-  const [selectedVersion, setSelectedVersion] = useState('facet-v1')
+  const [selectedVersion, setSelectedVersion] = useState(versionFromUrl)
+
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('v', selectedVersion)
+    window.history.replaceState(null, '', url)
+  }, [selectedVersion])
   const [expandedFacets, setExpandedFacets] = useState(['quality', 'severity'])
   const isFacet = selectedVersion === 'facet-v1'
   const isMoonshot = selectedVersion === 'moonshot-v1'
@@ -100,8 +113,9 @@ function App() {
       if (event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'k') {
         event.preventDefault()
         if (event.repeat) return
-        setVersionsVisible((visible) => !visible)
-        setVersionsOpen(false)
+        setVersionsVisible(true)
+        setVersionsOpen((open) => !open)
+        setThemeSettingsOpen(false)
       }
     }
     document.addEventListener('keydown', onKeyDown)
