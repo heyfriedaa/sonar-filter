@@ -113,14 +113,15 @@ function App() {
       if (event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'k') {
         event.preventDefault()
         if (event.repeat) return
-        setVersionsVisible(true)
-        setVersionsOpen((open) => !open)
+        const showing = versionsVisible && versionsOpen
+        setVersionsVisible(!showing)
+        setVersionsOpen(!showing)
         setThemeSettingsOpen(false)
       }
     }
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
-  }, [])
+  }, [versionsVisible, versionsOpen])
 
   useEffect(() => {
     if (!versionsOpen) return
